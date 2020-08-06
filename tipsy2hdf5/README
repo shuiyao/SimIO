@@ -1,0 +1,39 @@
+Note on the Metals:
+--------------------------------
+By default, TIPSY stores four metals - C, O, Si and Fe in the block aux_gp.metals[4].
+
+File Format
+--------------------------------
+Gadget-3 simulations usually output data in one of these 3 binary formats:
+Original Gadget Format; TIPSY Format; HDF5 Format
+
+Our group has been using the TIPSY format since the beginning. The TIPSY format can be directly loaded by the visualization tool - tipsy. However, the other two formats, especially the HDF5 format, likely have better Python support. I think programs like yt could directly load HDF5 format.
+
+Use the following command to convert TIPSY format into HDF5 format.
+Example:
+tipsy2hdf5 ./data/snap_p6n36fof_031
+This will convert the 3 tipsy files into snap_p6n36fof_031.hdf5
+
+Data Structure
+--------------------------------
+Our simulations have three type of SPH particles, the gas (GAS), dark matter (DARK), and stellar particles (STAR). Only the gas particles could contribute to SZ signal. Each GAS particle has several properties, including 3D coordinates, 3D velocity vector, mass, density, temperature, metallicity, ionization, etc.
+
+If you are familiar with python and HDF5 format, you may modify and use the python script named readhdf5.py to read the .hdf5 file just generated.
+
+Unit Conversion
+--------------------------------
+*** MAKE SURE: Change certain Makefile parameters to make them compatible with the simulation.
+
+The HDF5 and Gadget Formats share the same unit system. TIPSY format uses its own unit system. 
+
+In the Gadget system, the default unit for length, velocity and mass are:
+L	1 kpc
+V	1 km/s
+M	10^10 Msolar
+Other units can be derived from them. For example, the time unit T will be (L/V) = (1 kpc / 1 km/s) = 0.97 Gyr.
+
+Also, all particle properties are measured in the co-moving reference frame. To convert everything into the rest frame, a redshift-dependent factor needs to be applied.
+
+Conversion between the TIPSY units and Gadget units can be found in the code tipsy2hdf5.c.
+
+
