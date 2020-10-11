@@ -1,0 +1,6 @@
+To compile, use >> make
+
+Usage:
+Example:
+>>> bin2ascii -rho -temp ./snapshot_108
+  - This will generate snapshot_108.rho and snapshot_108.temp from the snapshot_108.bin file.
